@@ -34,8 +34,8 @@ def slow_screen_capture():
 def fast_screen_capture():
     top = 0
     left = 0
-    width = 1280
-    height = 720
+    width = 600
+    height = 400
     start_time = time.time()
     mon = {'top': top, 'left': left, 'width': width, 'height': height}
     with mss() as sct:
@@ -44,6 +44,8 @@ def fast_screen_capture():
             img = sct.grab(mon)
             print('FPS: {0}'.format(1 / (time.time() - last_time)))
             cv.imshow('test', np.array(img))
+            cv.moveWindow('test', width+100, 0)
+            cv.resizeWindow('Test', width, height)
             if cv.waitKey(1) == ord('q'):
                 cv.destroyAllWindows()
                 break
@@ -104,15 +106,14 @@ def select_window():
         name = ewmh.getWmName(i)
         #print(name)
         if str(name).__contains__('Mozilla'):  # replace with la name
-            ewmh.setMoveResizeWindow(i, 1, 0, 0, 1280, 720)
+            ewmh.setMoveResizeWindow(i, 1, 0, 0, 600, 400)
             ewmh.setActiveWindow(i)
             ewmh.display.flush()
-            time.sleep(2)
         #print(name)
 
 
 if __name__ == '__main__':
-    #select_window()
+    select_window()
     #capture_screen_win()
-    test_screen_capture()
+    fast_screen_capture()
     #slow_screen_capture()
