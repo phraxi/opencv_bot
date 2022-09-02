@@ -1,49 +1,53 @@
 import os
 import sys
+
+import cv2
 import numpy as np
 import cv2 as cv
 import pyautogui
-import PIL
-import win32gui
-import win32ui
-import win32con
+import Xlib
+from PIL import ImageGrab
+#import win32gui
+#import win32ui
+#import win32con
 
 from mss import mss
-from time import time
+import time
+from ewmh import EWMH
+import random as rd
 
-
-def slow_capture():
-    loop_time = time()
+# slowest screen capture with pyautogui
+def slow_screen_capture():
+    loop_time = time.time()
     while (True):
         screenshot = pyautogui.screenshot()
         screenshot = np.array(screenshot)
         screenshot = cv.cvtColor(screenshot, cv.COLOR_RGB2BGR)
         cv.imshow('Hi', screenshot)
-        print('FPS{}'.format(1 / (time() - loop_time)))
-        loop_time = time()
+        print('FPS{}'.format(1 / (time.time() - loop_time)))
+        loop_time = time.time()
         if cv.waitKey(1) == ord('q'):
             cv.destroyAllWindows()
             break
 
 
-def fast_capture():
+def fast_screen_capture():
     top = 0
     left = 0
     width = 1280
     height = 720
-    start_time = time()
+    start_time = time.time()
     mon = {'top': top, 'left': left, 'width': width, 'height': height}
     with mss() as sct:
         while True:
-            last_time = time()
+            last_time = time.time()
             img = sct.grab(mon)
-            print('FPS: {0}'.format(1 / (time() - last_time)))
+            print('FPS: {0}'.format(1 / (time.time() - last_time)))
             cv.imshow('test', np.array(img))
             if cv.waitKey(1) == ord('q'):
                 cv.destroyAllWindows()
                 break
-
-
+'''
 # fast capture for windows (still slower)
 def capture_win():
     w, h = 1280, 720
@@ -89,9 +93,26 @@ def capture_win():
 def win_enum_handler(hwnd, ctx):
     if win32gui.IsWindowVisible(hwnd):
         print(hex(hwnd), win32gui.GetWindowText(hwnd))
+'''
+
+# selects needed window for screen capture
+def select_window():
+    ewmh = EWMH()
+    wins = ewmh.getClientList()
+    win = ewmh.getActiveWindow()
+    for i in wins:
+        name = ewmh.getWmName(i)
+        #print(name)
+        if str(name).__contains__('Mozilla'):  # replace with la name
+            ewmh.setMoveResizeWindow(i, 1, 0, 0, 1280, 720)
+            ewmh.setActiveWindow(i)
+            ewmh.display.flush()
+            time.sleep(2)
+        #print(name)
 
 
 if __name__ == '__main__':
-    #capture_win()
-    fast_capture()
-    #slow_capture()
+    #select_window()
+    #capture_screen_win()
+    test_screen_capture()
+    #slow_screen_capture()
