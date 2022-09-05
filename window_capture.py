@@ -9,10 +9,6 @@ import time
 from ewmh import EWMH
 
 
-import numpy as np
-import win32gui, win32ui, win32con
-
-
 class WindowCapture:
 
     # properties
@@ -102,6 +98,7 @@ class WindowCapture:
     # the __init__ constructor.
     def get_screen_position(self, pos):
         return (pos[0] + self.offset_x, pos[1] + self.offset_y)
+
 
 
 # slowest screen capture with pyautogui
