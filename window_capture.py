@@ -57,7 +57,7 @@ class WindowCapture:
         cDC.BitBlt((0, 0), (self.w, self.h), dcObj, (self.cropped_x, self.cropped_y), win32con.SRCCOPY)
 
         # convert the raw data into a format opencv can read
-        #dataBitMap.SaveBitmapFile(cDC, 'debug.bmp')
+        # dataBitMap.SaveBitmapFile(cDC, 'debug.bmp')
         signedIntsArray = dataBitMap.GetBitmapBits(True)
         img = np.fromstring(signedIntsArray, dtype='uint8')
         img.shape = (self.h, self.w, 4)
@@ -71,7 +71,7 @@ class WindowCapture:
         # drop the alpha channel, or cv.matchTemplate() will throw an error like:
         #   error: (-215:Assertion failed) (depth == CV_8U || depth == CV_32F) && type == _templ.type()
         #   && _img.dims() <= 2 in function 'cv::matchTemplate'
-        img = img[...,:3]
+        img = img[..., :3]
 
         # make image C_CONTIGUOUS to avoid errors that look like:
         #   File ... in draw_rectangles
@@ -89,6 +89,7 @@ class WindowCapture:
         def winEnumHandler(hwnd, ctx):
             if win32gui.IsWindowVisible(hwnd):
                 print(hex(hwnd), win32gui.GetWindowText(hwnd))
+
         win32gui.EnumWindows(winEnumHandler, None)
 
     # translate a pixel position on a screenshot image to a pixel position on the screen.
@@ -98,7 +99,6 @@ class WindowCapture:
     # the __init__ constructor.
     def get_screen_position(self, pos):
         return (pos[0] + self.offset_x, pos[1] + self.offset_y)
-
 
 
 # slowest screen capture with pyautogui
@@ -129,7 +129,7 @@ def fast_screen_capture_linux():
             img = sct.grab(mon)
             print('FPS: {0}'.format(1 / (time.time() - last_time)))
             cv.imshow('test', np.array(img))
-            cv.moveWindow('test', width+100, 0)
+            cv.moveWindow('test', width + 100, 0)
             cv.resizeWindow('Test', width, height)
             if cv.waitKey(1) == ord('q'):
                 cv.destroyAllWindows()
@@ -138,6 +138,7 @@ def fast_screen_capture_linux():
 
 # fast capture for windows (still slower)
 
+@staticmethod
 def win_enum_handler(hwnd, ctx):
     if win32gui.IsWindowVisible(hwnd):
         print(hex(hwnd), win32gui.GetWindowText(hwnd))
@@ -154,6 +155,3 @@ def select_window_linux():
             ewmh.setMoveResizeWindow(i, 1, 0, 0, 600, 400)
             ewmh.setActiveWindow(i)
             ewmh.display.flush()
-
-
-
