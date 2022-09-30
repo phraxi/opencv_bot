@@ -86,7 +86,7 @@ class WindowCapture:
         return li
 
     # translate a pixel position on a screenshot image to a pixel position on the screen.
-    # pos = (x, y)
+    # to_progress_pos = (x, y)
     # WARNING: if you move the window being captured after execution is started, this will
     # return incorrect coordinates, because the window position is only calculated in
     # the __init__ constructor.

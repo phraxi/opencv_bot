@@ -32,7 +32,7 @@ def ini_capture(window):
         cv.imshow('Lost Ark Bot', screenshot)
         # print('FPS {}'.format(1 / (time() - loop_time)))
         loop_time = time()
-        pos = 'pos'
+        pos = 'to_progress_pos'
         neg = 'neg'
 
         # waits 1 ms every loop to process key presses
@@ -41,13 +41,13 @@ def ini_capture(window):
         if key == ord('q'):
             cv.destroyAllWindows()
             break
-        # press 'p' to take a positive screenshot and write it in pos dir
+        # press 'p' to take a positive screenshot and write it in to_progress_pos dir
         elif key == ord('p'):
-            cv.imwrite('pos/{}.jpg'.format(loop_time), screenshot)
+            cv.imwrite('to_progress_pos/{}.jpg'.format(loop_time), screenshot)
         # press 'n' to take a negative screenshot and write it in neg dir
         elif key == ord('n'):
             cv.imwrite('neg/{}.jpg'.format(loop_time), screenshot)
-    # print("Positive Screenshots: ", count_files_in_dir(pos))
+    # print("Positive Screenshots: ", count_files_in_dir(to_progress_pos))
     # print("Negative Screenshots: ", count_files_in_dir(neg))
 
 
