@@ -4,9 +4,9 @@ import pyautogui
 import win32gui
 import win32ui
 import win32con
-from mss import mss
+#from mss import mss
 import time
-from ewmh import EWMH
+#from ewmh import EWMH
 
 
 class WindowCapture:

@@ -1,5 +1,6 @@
 import time
 import pyautogui
+import cv2 as cv
 
 
 def main():
@@ -17,10 +18,10 @@ def countdown():
 
 
 def start_fishing():
-    energy = 6800
+    energy = 7400
     trys = round(energy / 60)
     i = 1
-    d = 40
+    d = 100
     pyautogui.keyDown('B')
     pyautogui.keyUp('B')
     time.sleep(10)
