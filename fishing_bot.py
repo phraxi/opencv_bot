@@ -22,8 +22,9 @@ def start_fishing():
     trys = round(energy / 60)
     i = 1
     d = 100
-    pyautogui.keyDown('B')
-    pyautogui.keyUp('B')
+    if not pyautogui.locateOnScreen("images/AngelSymbol.png", confidence=0.6):
+        pyautogui.keyDown('B')
+        pyautogui.keyUp('B')
     time.sleep(10)
     pyautogui.moveTo(955, 819)
     time.sleep(10)
@@ -31,22 +32,23 @@ def start_fishing():
     pyautogui.keyUp('E')
     while i in range(trys):
         try:
-            x1, y1 = pyautogui.center(pyautogui.locateOnScreen("images/Ausrufezeichen.jpg", confidence=0.6))
-            i = i + 1
-            pyautogui.keyDown('E')
-            pyautogui.keyUp('E')
-            pyautogui.sleep(10)
-            print(str(i - 1) + ". try")
-            if i % d == 0:
-                print(str(i) + '. try, durability limit reached, go to stronghold')
-                go_repair()
-                pyautogui.moveTo(955, 819)
+            if pyautogui.locateOnScreen("images/Ausrufezeichen.png", confidence=0.6):
+            #x1, y1 = pyautogui.center(pyautogui.locateOnScreen("images/Ausrufezeichen.png", confidence=0.6))
+                i = i + 1
+                pyautogui.keyDown('E')
+                pyautogui.keyUp('E')
                 pyautogui.sleep(10)
-                pyautogui.keyDown('B')
-                pyautogui.keyUp('B')
-                time.sleep(10)
-            pyautogui.keyDown('E')
-            pyautogui.keyUp('E')
+                print(str(i - 1) + ". try")
+                if i % d == 0:
+                    print(str(i) + '. try, durability limit reached, go to stronghold')
+                    go_repair()
+                    pyautogui.moveTo(955, 819)
+                    pyautogui.sleep(10)
+                    pyautogui.keyDown('B')
+                    pyautogui.keyUp('B')
+                    time.sleep(10)
+                pyautogui.keyDown('E')
+                pyautogui.keyUp('E')
         except:
             time.sleep(0.1)
 
