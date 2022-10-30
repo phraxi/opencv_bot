@@ -5,7 +5,7 @@ import cv2 as cv
 
 def main():
     countdown()
-    #stronghold_routine()
+    # stronghold_routine()
     start_fishing()
 
 
@@ -18,39 +18,52 @@ def countdown():
 
 
 def start_fishing():
+    # set life energy, may be implemented through input
     energy = 7400
-    trys = round(energy / 60)
-    i = 1
+    # set durabiloty
     d = 100
+    # calculate how many trys to do from energy
+    trys = round(energy / 60)
+    # change to fishing tool, if its not on screen
     if not pyautogui.locateOnScreen("images/AngelSymbol.png", confidence=0.6):
         pyautogui.keyDown('B')
         pyautogui.keyUp('B')
-    time.sleep(10)
+        time.sleep(10)
+    # move to location and start fishing by pressing "E"
     pyautogui.moveTo(955, 819)
     time.sleep(10)
     pyautogui.keyDown('E')
     pyautogui.keyUp('E')
+    i = 0
+    j = 0
     while i in range(trys):
-        try:
-            if pyautogui.locateOnScreen("images/Ausrufezeichen.png", confidence=0.6):
-            #x1, y1 = pyautogui.center(pyautogui.locateOnScreen("images/Ausrufezeichen.png", confidence=0.6))
-                i = i + 1
-                pyautogui.keyDown('E')
-                pyautogui.keyUp('E')
+        if pyautogui.locateOnScreen("images/Ausrufezeichen.png", confidence=0.6):
+            # x1, y1 = pyautogui.center(pyautogui.locateOnScreen("images/Ausrufezeichen.png", confidence=0.6))
+            i = i + 1
+            j = 0
+            pyautogui.keyDown('E')
+            pyautogui.keyUp('E')
+            pyautogui.sleep(10)
+            #print(str(i +1) + ". try")
+            if i % d == 0:
+                print(str(i) + '. try, durability limit reached, go to stronghold')
+                go_repair()
+                pyautogui.moveTo(955, 819)
                 pyautogui.sleep(10)
-                print(str(i - 1) + ". try")
-                if i % d == 0:
-                    print(str(i) + '. try, durability limit reached, go to stronghold')
-                    go_repair()
-                    pyautogui.moveTo(955, 819)
-                    pyautogui.sleep(10)
-                    pyautogui.keyDown('B')
-                    pyautogui.keyUp('B')
-                    time.sleep(10)
-                pyautogui.keyDown('E')
-                pyautogui.keyUp('E')
-        except:
-            time.sleep(0.1)
+                pyautogui.keyDown('B')
+                pyautogui.keyUp('B')
+                time.sleep(10)
+            pyautogui.keyDown('E')
+            pyautogui.keyUp('E')
+            time.sleep(10)
+        print("j :", j)
+        print("i: ", i)
+        j = j + 1
+        if j > 60:
+            pyautogui.keyDown('E')
+            pyautogui.keyUp('E')
+            time.sleep(10)
+            j = 0
 
 
 def go_repair():
