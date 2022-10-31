@@ -36,6 +36,7 @@ def start_fishing():
     pyautogui.keyUp('E')
     i = 0
     j = 0
+    # search screen until image was found
     while i in range(trys):
         if pyautogui.locateOnScreen("images/Ausrufezeichen.png", confidence=0.6):
             # x1, y1 = pyautogui.center(pyautogui.locateOnScreen("images/Ausrufezeichen.png", confidence=0.6))
