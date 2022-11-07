@@ -21,7 +21,7 @@ def start_fishing():
     # set life energy, may be implemented through input
     energy = 7400
     # set durabiloty
-    d = 100
+    d = 40
     # calculate how many trys to do from energy
     trys = round(energy / 60)
     # change to fishing tool, if its not on screen
@@ -51,9 +51,10 @@ def start_fishing():
                 go_repair()
                 pyautogui.moveTo(955, 819)
                 pyautogui.sleep(10)
-                pyautogui.keyDown('B')
-                pyautogui.keyUp('B')
-                time.sleep(10)
+                if not pyautogui.locateOnScreen("images/AngelSymbol.png", confidence=0.6):
+                    pyautogui.keyDown('B')
+                    pyautogui.keyUp('B')
+                    time.sleep(10)
             pyautogui.keyDown('E')
             pyautogui.keyUp('E')
             time.sleep(10)
@@ -71,7 +72,7 @@ def go_repair():
     # go to stronghold
     pyautogui.keyDown('9')
     pyautogui.keyUp('9')
-    time.sleep(60)
+    time.sleep(90)
     # open menu and repair
     pyautogui.hotkey('ctrl', '1')
     time.sleep(20)
@@ -84,16 +85,16 @@ def go_repair():
     pyautogui.click(725, 820)
     time.sleep(20)
     pyautogui.doubleClick(905, 645, interval=4)
-    time.sleep(10)
+    time.sleep(20)
     # quit menus
     for j in range(3):
         pyautogui.keyDown('esc')
         pyautogui.keyUp('esc')
-        time.sleep(10)
+        time.sleep(20)
     # go back to world
     pyautogui.keyDown('8')
     pyautogui.keyUp('8')
-    time.sleep(120)
+    time.sleep(90)
 
 
 def stronghold_routine():
