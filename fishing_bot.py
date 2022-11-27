@@ -80,7 +80,7 @@ def go_repair():
     for i in range(4):
         coords = pyautogui.locateOnScreen("images/SH_Button_" + str(i + 1) + ".png", confidence=0.6)
         pyautogui.click(coords)
-        print(coords)
+        print(coords, i)
         time.sleep(10)
     '''
     pyautogui.click(231, 271)
