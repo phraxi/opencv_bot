@@ -6,7 +6,8 @@ import cv2 as cv
 def main():
     countdown()
     # stronghold_routine()
-    start_fishing()
+    # start_fishing()
+    go_repair()
 
 
 def countdown():
@@ -45,7 +46,7 @@ def start_fishing():
             pyautogui.keyDown('E')
             pyautogui.keyUp('E')
             pyautogui.sleep(10)
-            #print(str(i +1) + ". try")
+            # print(str(i +1) + ". try")
             if i % d == 0:
                 print(str(i) + '. try, durability limit reached, go to stronghold')
                 go_repair()
@@ -70,12 +71,18 @@ def start_fishing():
 
 def go_repair():
     # go to stronghold
-    pyautogui.keyDown('9')
-    pyautogui.keyUp('9')
-    time.sleep(90)
+    # pyautogui.keyDown('9')
+    # pyautogui.keyUp('9')
+    # time.sleep(90)
     # open menu and repair
     pyautogui.hotkey('ctrl', '1')
-    time.sleep(20)
+    time.sleep(10)
+    for i in range(4):
+        coords = pyautogui.locateOnScreen("images/SH_Button_" + str(i + 1) + ".png", confidence=0.6)
+        pyautogui.click(coords)
+        time.sleep(10)
+        print(coords)
+    '''
     pyautogui.click(231, 271)
     time.sleep(20)
     pyautogui.click(196, 353)
@@ -86,6 +93,7 @@ def go_repair():
     time.sleep(20)
     pyautogui.doubleClick(905, 645, interval=4)
     time.sleep(20)
+    '''
     # quit menus
     for j in range(3):
         pyautogui.keyDown('esc')
